@@ -1,2 +1,9 @@
-package com.tantely.freshfruitmanager.enums;public class OrderStatus {
+package com.tantely.freshfruitmanager.enums;
+
+public enum OrderStatus {
+    PENDING,
+    PROCESSING,
+    SHIPPED,
+    DELIVERED,
+    CANCELLED
 }
