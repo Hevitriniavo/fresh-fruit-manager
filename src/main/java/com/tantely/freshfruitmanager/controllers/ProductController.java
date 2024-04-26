@@ -1,22 +1,30 @@
 package com.tantely.freshfruitmanager.controllers;
 
-import com.tantely.freshfruitmanager.exceptions.InternalServerException;
+import com.tantely.freshfruitmanager.dtos.ProductResponse;
 import com.tantely.freshfruitmanager.services.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/products")
+    @RequestMapping("/products")
 @CrossOrigin
-@RequiredArgsConstructor
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
+
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @PostMapping
-    public Map<?, ?> createProduct(){
-        throw new InternalServerException("OKkk");
+    public ProductResponse createProduct(
+            @RequestParam String name,
+            @RequestParam Double price,
+            @RequestParam Integer stockQuantity,
+            @RequestParam String category,
+            @RequestParam String origin,
+            @RequestParam MultipartFile file
+    ) {
+        return productService.createProduct(name, price, stockQuantity, category, origin, file);
     }
 }

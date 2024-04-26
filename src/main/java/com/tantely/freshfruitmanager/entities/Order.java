@@ -2,11 +2,7 @@ package com.tantely.freshfruitmanager.entities;
 
 import com.tantely.freshfruitmanager.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
+@Builder
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +29,7 @@ public class Order {
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order")
+    @Builder.Default
     private List<OrderItem> orderItems = new ArrayList<>();
 
 }

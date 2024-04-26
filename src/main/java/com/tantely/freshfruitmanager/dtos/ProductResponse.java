@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record ProductResponse (
+public record ProductResponse(
         Long id,
         String name,
         Double price,
@@ -16,4 +16,5 @@ public record ProductResponse (
         LocalDateTime addedDate,
         String origin,
         String url
-) { }
+) {
+}
