@@ -28,7 +28,7 @@ public class Product {
 
     private String category;
 
-    private String origin;
+    private String description;
 
     private String url;
 

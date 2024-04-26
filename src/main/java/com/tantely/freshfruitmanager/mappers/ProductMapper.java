@@ -1,7 +1,6 @@
 package com.tantely.freshfruitmanager.mappers;
 
 import com.tantely.freshfruitmanager.dtos.ProductResponse;
-import com.tantely.freshfruitmanager.dtos.requests.RestProduct;
 import com.tantely.freshfruitmanager.entities.Product;
 import org.springframework.stereotype.Component;
 
@@ -9,18 +8,6 @@ import java.time.LocalDateTime;
 
 @Component
 public class ProductMapper {
-
-    public Product from(RestProduct restProduct, String url) {
-        return Product.builder()
-                .name(restProduct.name())
-                .price(restProduct.price())
-                .origin(restProduct.origin())
-                .stockQuantity(restProduct.stockQuantity())
-                .category(restProduct.category())
-                .url(url)
-                .addedDate(LocalDateTime.now())
-                .build();
-    }
 
     public ProductResponse from(Product product) {
         return new ProductResponse(
@@ -30,7 +17,7 @@ public class ProductMapper {
                 product.getStockQuantity(),
                 product.getCategory(),
                 product.getAddedDate(),
-                product.getOrigin(),
+                product.getDescription(),
                 product.getUrl()
         );
     }
@@ -39,7 +26,7 @@ public class ProductMapper {
         return Product.builder()
                 .name(name)
                 .price(price)
-                .origin(origin)
+                .description(origin)
                 .stockQuantity(stockQuantity)
                 .category(category)
                 .url(url)

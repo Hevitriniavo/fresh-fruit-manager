@@ -14,7 +14,7 @@ public record ProductResponse(
         String category,
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDateTime addedDate,
-        String origin,
+        String description,
         String url
 ) {
 }

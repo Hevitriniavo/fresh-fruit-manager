@@ -6,7 +6,7 @@ public record RestProduct(
         Double price,
         Integer stockQuantity,
         String category,
-        String origin,
+        String description,
         String url
 ) {
 }
