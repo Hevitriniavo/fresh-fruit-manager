@@ -59,6 +59,10 @@ public class ProductServiceImpl implements ProductService {
             } else {
                 if (priceMin != null && priceMax != null) {
                     productPage = productRepository.findAllByPriceBetween(priceMin, priceMax, pageRequest);
+                } else if (priceMin != null) {
+                    productPage = productRepository.findAllByPriceGreaterThanEqual(priceMin, pageRequest);
+                } else if (priceMax != null) {
+                    productPage = productRepository.findAllByPriceLessThanEqual(priceMax, pageRequest);
                 } else {
                     productPage = productRepository.findAll(pageRequest);
                 }
@@ -78,6 +82,35 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse findProductById(Long productId) {
         var foundProduct = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product ID: " + productId + " not found"));
         return productMapper.from(foundProduct);
+    }
+
+    @Override
+    public ProductResponse deleteProductById(Long productId) {
+        var foundProduct = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product ID: " + productId + " not found"));
+        if (fileService.deleteFile(foundProduct.getUrl())) {
+            productRepository.deleteById(productId);
+            return productMapper.from(foundProduct);
+        } else {
+            throw new InternalServerException("Error delete product id :" + productId);
+        }
+    }
+
+    @Override
+    public ProductResponse updateProduct(Long productId, String name, Double price, Integer stockQuantity, String category, String description, MultipartFile file) {
+        try {
+            var foundProduct = productRepository.findById(productId).orElseThrow(() -> new NotFoundException("Product ID: " + productId + " not found"));
+            if (fileService.deleteFile(foundProduct.getUrl())) {
+                var url = fileService.saveFile(file);
+                var product = productMapper.from(name, price, stockQuantity, category, description, url);
+                product.setId(foundProduct.getId());
+                var savedProduct = productRepository.save(product);
+                return productMapper.from(savedProduct);
+            } else {
+                throw new InternalServerException("Error delete product id :" + productId);
+            }
+        } catch (Exception ex) {
+            throw new InternalServerException("Error creating product: " + ex.getMessage());
+        }
     }
 
 }

@@ -28,8 +28,10 @@ public class Product {
 
     private String category;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
+    @Column(columnDefinition = "TEXT")
     private String url;
 
     @OneToMany(mappedBy = "product")

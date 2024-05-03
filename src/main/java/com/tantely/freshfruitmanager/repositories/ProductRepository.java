@@ -18,4 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findAllByNameIgnoreCaseContainingAndPriceGreaterThanEqual(String searchName, Double priceMin, PageRequest pageRequest);
 
     Page<Product> findAllByNameIgnoreCaseContaining(String searchName, PageRequest pageRequest);
+
+    Page<Product> findAllByPriceGreaterThanEqual(Double priceMin, PageRequest pageRequest);
+
+    Page<Product> findAllByPriceLessThanEqual(Double priceMax, PageRequest pageRequest);
 }

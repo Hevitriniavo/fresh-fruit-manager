@@ -29,21 +29,41 @@ public class ProductController {
         return productService.createProduct(name, price, stockQuantity, category, description, file);
     }
 
+    @PutMapping
+    public ProductResponse updateProduct(
+            @RequestParam Long productId,
+            @RequestParam String name,
+            @RequestParam Double price,
+            @RequestParam Integer stockQuantity,
+            @RequestParam String category,
+            @RequestParam String description,
+            @RequestParam MultipartFile file
+    ) {
+        return productService.updateProduct(productId, name, price, stockQuantity, category, description, file);
+    }
+
+
 
     @GetMapping
     public Paginate<ProductResponse> getAllProducts(
             @RequestParam(required = false) Double priceMin,
             @RequestParam(required = false) Double priceMax,
             @RequestParam(required = false) String searchName,
-            @RequestParam(required = false , defaultValue = "0") Integer currentPage,
-            @RequestParam(required = false, defaultValue = "10") Integer pageNumber
+            @RequestParam(required = false , defaultValue = "0") String currentPage,
+            @RequestParam(required = false, defaultValue = "10") String pageNumber
     ) {
-        return productService.findAllProducts(priceMin, priceMax, searchName, currentPage, pageNumber);
+        return productService.findAllProducts(priceMin, priceMax, searchName, Integer.valueOf(currentPage), Integer.valueOf(pageNumber));
     }
 
 
     @GetMapping("/{productId}")
     public ProductResponse getProductById(@PathVariable Long productId){
         return productService.findProductById(productId);
+    }
+
+
+    @DeleteMapping("/{productId}")
+    public ProductResponse deleteProductById(@PathVariable Long productId){
+        return productService.deleteProductById(productId);
     }
 }
